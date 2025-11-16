@@ -1,25 +1,41 @@
-import java.io.FileWriter;
-import java.io.FileReader;
-import java.io.IOException;
-
-public class SimpleReadWrite {
+import java.util.Scanner;
+class BaseException extends Exception {
+    BaseException(String msg) {
+        super(msg);
+    }
+}
+class LevelTwoException extends BaseException {
+    LevelTwoException(String msg) {
+        super(msg);
+    }
+}
+class LevelThreeException extends LevelTwoException {
+    LevelThreeException(String msg) {
+        super(msg);
+    }
+}
+class A {
+    void show() throws BaseException {
+        throw new BaseException("Exception from class A (Base Level).");
+    }
+}
+class B extends A {
+        void show() throws LevelTwoException {
+        throw new LevelTwoException("Exception from class B (Level Two).");
+    }
+}
+class C extends B {
+    void show() throws LevelThreeException {
+        throw new LevelThreeException("Exception from class C (Level Three).");
+    }
+}
+public class ExceptionHierarchyDemo {
     public static void main(String[] args) {
-   System.out.println("Lalita 24csu278 " );
-        try {
-            FileWriter writer = new FileWriter("sample.txt");
-            writer.write("Hello, this is a simple file handling example in Java.");
-            writer.close();
-            System.out.println("Data written successfully.");
-
-            FileReader reader = new FileReader("sample.txt");
-            int i;
-            System.out.print("File contents: ");
-            while ((i = reader.read()) != -1) {
-                System.out.print((char) i);
-            }
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+    System.out.println("Lalita 24csu278");
+        A obj = new C();         try {
+            obj.show();
+        } catch (BaseException e) {
+            System.out.println("Caught Exception: " + e.getMessage());
         }
     }
 }
